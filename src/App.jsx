@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 const API_BACKUP = import.meta.env.VITE_APP_API_KEY_BACKUP;
 const API_SEARCH = import.meta.env.VITE_APP_API_KEY_SEARCH;
 import RecipeInfo from "./Components/RecipeInfo";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import { useAuth } from "./AuthContext";
 import {
   Card,
   CardContent,
@@ -34,6 +38,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const recipeRefs = useRef([]);
+  const { currentUser, logout } = useAuth();
 
   useEffect(() => {
     const fetchAllRecipeData = async () => {
@@ -144,8 +149,25 @@ function App() {
 
   return (
     <>
-      <div className="header">
+      <div className="header flex flex-col justify-between items-center">
         <h1 className="font-bold text-lg my-5">Meal Planner</h1>
+        <div className="button-container">
+          {currentUser ? (
+            <>
+              <Link to="/recipe-website/bookmarks">
+                <Button variant="outline">Bookmarks</Button>
+              </Link>
+              <Button variant="outline" onClick={logout}>
+                Log Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Login />
+              <Signup />
+            </>
+          )}
+        </div>
       </div>
 
       <div className="cardContainer">
@@ -207,7 +229,10 @@ function App() {
         )}
       </div>
 
-      <form onSubmit={(e) => e.preventDefault()} className="rounded-lg border bg-card text-card-foreground shadow-sm m-2 p-2 search">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="rounded-lg border bg-card text-card-foreground shadow-sm m-2 p-2 search"
+      >
         <Input
           type="text"
           placeholder="Search for recipes"

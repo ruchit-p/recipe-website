@@ -107,6 +107,28 @@ body {
   width: 100%;
 }
 
+/* App.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px; /* Add some padding for better spacing */
+}
+
+.button-container {
+  position: absolute;
+  right: 30px; /* Adjust right position */
+  top: 20px;
+  display: flex;
+  gap: 10px; /* Adjust gap between buttons */
+}
+
+
+.button-container > * {
+  margin-left: 10px; /* Add left margin to ensure spacing */
+}
+
+
 
 
 .results {
@@ -139,5 +161,18 @@ body {
 
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 768px) {
+  .button-container {
+    display: contents;
+    margin-bottom: 20px;
 
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
 }

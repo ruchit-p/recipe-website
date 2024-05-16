@@ -1,9 +1,10 @@
 import React, { forwardRef } from 'react';
+import './RecipeInfo.css';
 
 const RecipeInfo = forwardRef(({ recipe }, ref) => {
   const renderAnalyzedInstructions = (instructions) => {
     return instructions.map((instruction, index) => (
-      <div key={index}>
+      <div key={index} className="instruction-section">
         <h3>{instruction.name}</h3>
         <ol>
           {instruction.steps.map((step, stepIndex) => (
@@ -19,14 +20,14 @@ const RecipeInfo = forwardRef(({ recipe }, ref) => {
       <img
         src={`https://spoonacular.com/recipeImages/${recipe.id}-480x360.${recipe.imageType}`}
         alt={`Small icon for ${recipe.title} recipe`}
-        className="icons"
+        className="recipe-image"
       />
-      <h2>{recipe.title}</h2>
+      <h2 className='font-bold text-center	'>{recipe.title}</h2>
       <p>Ready in {recipe.readyInMinutes} minutes</p>
       <p>Servings: {recipe.servings}</p>
-      <div dangerouslySetInnerHTML={{ __html: recipe.summary }}></div>
+      <div className="recipe-summary" dangerouslySetInnerHTML={{ __html: recipe.summary }}></div>
       {recipe.analyzedInstructions && recipe.analyzedInstructions.length > 0 && (
-        <div>
+        <div className="instructions">
           <h2>Instructions:</h2>
           {renderAnalyzedInstructions(recipe.analyzedInstructions)}
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 const API_BACKUP = import.meta.env.VITE_APP_API_KEY_BACKUP;
+const API_SEARCH = import.meta.env.VITE_APP_API_KEY_SEARCH;
 import RecipeInfo from "./Components/RecipeInfo";
 import {
   Card,
@@ -80,7 +81,7 @@ function App() {
     setError(null);
     try {
       const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${search}&instructionsRequired=true&addRecipeInformation=true&number=15&type=${type}&minCalories=${
+        `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_SEARCH}&query=${search}&instructionsRequired=true&addRecipeInformation=true&number=15&type=${type}&minCalories=${
           parseInt(minCalories) || 0
         }&maxCalories=${parseInt(maxCalories) || 1000}`
       );

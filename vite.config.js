@@ -12,5 +12,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/hw5-recipe-website/',
+  base: '/recipe-website/',
 })

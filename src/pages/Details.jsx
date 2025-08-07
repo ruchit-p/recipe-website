@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { useAuth } from "../AuthContext";
@@ -14,6 +14,7 @@ import { Button } from "../Components/ui/button";
 import { Link } from "react-router-dom";
 import Login from "../Components/Login";
 import Signup from "../Components/Signup";
+import DOMPurify from "dompurify";
 
 const API_KEY = import.meta.env.VITE_APP_API_KEY_BOOKMARK_DETAILS;
 const API_BACKUP = import.meta.env.VITE_APP_API_KEY_BOOKMARK_BACKUP;
@@ -23,6 +24,7 @@ const Details = () => {
   const [recipeDetails, setRecipeDetails] = useState(null);
   const { currentUser, addBookmark, removeBookmark, logout } = useAuth();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const sanitizedSummary = useMemo(() => DOMPurify.sanitize(recipeDetails?.summary || ""), [recipeDetails?.summary]);
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
@@ -121,9 +123,7 @@ const Details = () => {
             </Button>
           </div>
 
-          <div
-            dangerouslySetInnerHTML={{ __html: recipeDetails.summary }}
-          ></div>
+          <div dangerouslySetInnerHTML={{ __html: sanitizedSummary }}></div>
           <h2 className="mt-4 mb-2 font-bold text-lg">Ingredients</h2>
           <ul className="list-disc pl-5">
             {recipeDetails.extendedIngredients.map((ingredient) => (

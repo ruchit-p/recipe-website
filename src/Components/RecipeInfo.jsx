@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState, useMemo } from "react";
 import "./RecipeInfo.css";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { Button } from "./ui/button";
@@ -6,10 +6,12 @@ import { useAuth } from "../AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { Link } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 const RecipeInfo = forwardRef(({ recipe }, ref) => {
   const { currentUser, addBookmark, removeBookmark } = useAuth();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const sanitizedSummary = useMemo(() => DOMPurify.sanitize(recipe.summary || ""), [recipe.summary]);
 
   useEffect(() => {
     const checkBookmark = async () => {
@@ -73,10 +75,7 @@ const RecipeInfo = forwardRef(({ recipe }, ref) => {
         View Details
         </Link>
       </Button>
-      <div
-        className="recipe-summary"
-        dangerouslySetInnerHTML={{ __html: recipe.summary }}
-      ></div>
+      <div className="recipe-summary" dangerouslySetInnerHTML={{ __html: sanitizedSummary }}></div>
       {recipe.analyzedInstructions &&
         recipe.analyzedInstructions.length > 0 && (
           <div className="instructions">

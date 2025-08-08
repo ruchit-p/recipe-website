@@ -1,6 +1,8 @@
 ## Meal Planner – Recipe Website
 
-React + Vite app to discover recipes, view nutrition details, and bookmark favorites. Uses Spoonacular API for data and Firebase Authentication + Firestore for user accounts and bookmarks.
+React app to discover recipes, view nutrition details, and bookmark favorites. Uses Spoonacular API for data and Firebase Authentication + Firestore for user accounts and bookmarks.
+
+Try it out at: https://ruchit-p.github.io/recipe-website/
 
 ### Features
 
